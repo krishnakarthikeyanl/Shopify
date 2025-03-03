@@ -1,0 +1,19 @@
+body {
+    justify-content: flex-start; /* Align to the top */
+    align-items: flex-end; /* Align to the bottom */
+  }
+  .first {
+    position: absolute;
+    top: 100px;
+    right: 50px;
+    border-radius: 10%;
+    background-color: green;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  .first:hover{
+    transform: scale(1.1);
+  }
+    

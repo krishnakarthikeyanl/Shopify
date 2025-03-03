@@ -1,0 +1,23 @@
+.products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 20px; /* Space between grid items */
+    width: 95vw;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .product {
+    flex-grow: 1; /* Retain flex-grow in case you switch back to flexbox */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content inside each product */
+    justify-content: space-between; /* Space out the content */
+    border: 1px solid rgb(188, 171, 171);
+    border-radius: 8px; /* Optional rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    padding: 10px; /* Add some inner padding */
+    text-align: center;
+  }
+  
