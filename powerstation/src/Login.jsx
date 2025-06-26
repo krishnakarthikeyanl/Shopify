@@ -3,7 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router-dom"; // 🚀 Add navigation
+import { useNavigate } from "react-router-dom";
 
 const schema = Yup.object().shape({
   email: Yup.string().email("Enter a valid Email").required("Email is Required"),
@@ -11,14 +11,26 @@ const schema = Yup.object().shape({
 });
 
 const Login = () => {
-  let navigate = useNavigate(); // 🚀 Initialize navigation
+  const navigate = useNavigate();
 
-  let paperStyle = {
+  // 🌈 Page background style
+  const pageStyle = {
+    minHeight: "100vh",
+    background: "linear-gradient(135deg, #fceabb, #f8b500)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
+  // 🧾 Paper (card) style
+  const paperStyle = {
     width: 400,
-    margin: "20px auto",
-    padding: "20px",
+    padding: "30px 20px",
+    borderRadius: "15px",
+    boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
     display: "grid",
     gap: "20px",
+    backgroundColor: "#fffef9",
   };
 
   const {
@@ -32,11 +44,8 @@ const Login = () => {
   const handleLogin = async (data) => {
     try {
       const response = await fetch("http://localhost:5173/api/login", {
-        // ✅ FIX: Changed "Login" to "login"
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
@@ -45,9 +54,7 @@ const Login = () => {
       if (response.ok) {
         alert("✅ Login Successful!");
         console.log("User Data:", result);
-
-        // 🚀 Redirect after login
-        navigate("/newProduct"); // Change this to your desired page
+        navigate("/newProduct");
       } else {
         alert(result.message || "❌ Login Failed! Please try again.");
       }
@@ -58,32 +65,48 @@ const Login = () => {
   };
 
   return (
-    <Paper
-      elevation={20}
-      style={paperStyle}
-      component="form"
-      onSubmit={handleSubmit(handleLogin)}
-    >
-      <Typography textAlign="center" variant="h6">
-        Login
-      </Typography>
-      <TextField
-        label="Email"
-        {...register("email")}
-        error={!!errors.email}
-        helperText={errors.email?.message}
-      />
-      <TextField
-        label="Password"
-        type="password"
-        {...register("password")}
-        error={!!errors.password}
-        helperText={errors.password?.message}
-      />
-      <Button variant="contained" type="submit">
-        Login
-      </Button>
-    </Paper>
+    <div style={pageStyle}>
+      <Paper
+        elevation={10}
+        style={paperStyle}
+        component="form"
+        onSubmit={handleSubmit(handleLogin)}
+      >
+        <Typography variant="h5" align="center" style={{ color: "#f57c00", fontWeight: "bold" }}>
+          Welcome Back
+        </Typography>
+
+        <TextField
+          label="Email"
+          {...register("email")}
+          error={!!errors.email}
+          helperText={errors.email?.message}
+          fullWidth
+        />
+
+        <TextField
+          label="Password"
+          type="password"
+          {...register("password")}
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          fullWidth
+        />
+
+        <Button
+          variant="contained"
+          type="submit"
+          style={{
+            backgroundColor: "#f57c00",
+            color: "white",
+            fontWeight: 600,
+            padding: "10px",
+          }}
+        >
+          Login
+        </Button>
+      </Paper>
+    </div>
   );
 };
 

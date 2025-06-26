@@ -1,87 +1,41 @@
-/* Navbar.css */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #ffffff; /* White background */
-  padding: 10px 20px;
-  color: #000000; /* Black text color for contrast */
-  position: relative;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.custom-navbar {
+  background: linear-gradient(90deg, #ffe259, #ffa751);
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .navbar-logo {
-  font-size: 24px;
-  color: #000000; /* Black logo text */
   text-decoration: none;
-}
-
-.menu-btn {
-  display: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #000000; /* Black icon color */
-}
-
-.navbar-links {
-  list-style: none;
-  display: flex;
-  gap: 40px; /* Adjusted to create balanced space */
-  align-items: center;
-  margin: 0;
-  padding: 0;
-}
-
-.navbar-links li a {
-  text-decoration: none;
-  color: #000000; /* Black text for links */
+  color: #000;
   font-weight: bold;
-  transition: color 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
-.navbar-links li a:hover {
-  color: #555555; /* Slightly lighter grey for hover */
+.navbar-logo:hover {
+  transform: scale(1.1);
+  color: #333;
 }
 
-.navbar-auth {
-  display: flex;
-  gap: 15px;
+.brand-title {
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
-.navbar-auth a {
-  text-decoration: none;
-  color: #000000; /* Black text for authentication links */
-  font-weight: bold;
+.nav-links .nav-link {
+  margin-right: 1rem;
+  font-weight: 500;
+  color: #000;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
 }
 
-.navbar-auth a:hover {
-  color: #555555; /* Slightly lighter grey for hover */
+.nav-links .nav-link:hover {
+  color: #fff;
+  border-bottom: 2px solid white;
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-  .menu-btn {
-    display: block;
-  }
-
-  .navbar-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%; /* Expanded width for mobile */
-    background-color: #ffffff; /* White background for mobile menu */
-    padding: 20px 0;
-    transition: top 0.3s ease; /* Smooth transition */
-  }
-
-  .navbar-links.show {
-    display: flex;
-  }
-
-  .navbar-links li {
-    text-align: center;
-    margin: 10px 0;
-  }
+.cart-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  font-size: 0.7rem;
 }
