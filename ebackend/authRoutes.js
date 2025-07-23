@@ -3,8 +3,6 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 
 const router = express.Router();
-
-// User Signup
 router.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -28,8 +26,6 @@ router.post("/signup", async (req, res) => {
     res.status(500).json({ message: "Error registering user" });
   }
 });
-
-// User Login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 

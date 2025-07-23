@@ -1,44 +1,54 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const User = require("../models/User");
+require("dotenv").config(); 
 
 const app = express();
+const PORT = process.env.PORT || 5000;
+
 app.use(cors());
 app.use(express.json());
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("MongoDB connected");
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+  });
 
-mongoose.connect("mongodb://127.0.0.1:27017/shopifyy", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log("✅ MongoDB Connected"))
-.catch((err) => console.log("❌ Mongo Error:", err));
+  
+app.post("/api/signup", async (req, res) => {
+  const { email, password, role } = req.body;
 
-const User = require("./models/User");
+  console.log("Signup request received:", req.body); 
 
-app.post("/register", async (req, res) => {
-  const { name, email, password, role } = req.body;
   try {
-    const user = new User({ name, email, password, role });
-    await user.save();
-    res.status(201).json({ message: "User Registered", user });
-  } catch (error) {
-    res.status(400).json({ message: "Registration Failed", error });
-  }
-});
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return res.status(400).json({ message: "User already exists" });
 
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await User.findOne({ email, password }); // ❌ Plain text match
-    if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-    res.json({ message: "Login successful", user: { id: user._id, role: user.role } });
+    const newUser = new User({ email, password, role });
+    await newUser.save();
+
+    res.status(201).json({ message: "Signup successful" });
   } catch (err) {
-    res.status(500).json({ message: "Login failed", error: err.message });
+    console.error("Signup error:", err); 
+    res.status(500).json({ message: "Server error" });
   }
 });
 
-app.listen(5000, () => {
-  console.log("🚀 Server started on http://localhost:5000");
+
+app.post("/api/login", async (req, res) => {
+  const { email, password, role } = req.body;
+
+  try {
+    const user = await User.findOne({ email, password, role });
+    if (!user) return res.status(401).json({ message: "Invalid credentials" });
+
+    res.status(200).json({ message: "Login successful", role: user.role });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
 });
+
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

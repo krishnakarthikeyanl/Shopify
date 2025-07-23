@@ -11,24 +11,34 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = async (e) => {
+  e.preventDefault();
 
-    if (!email || !password) {
-      Swal.fire("Missing Fields", "Please enter email and password", "warning");
-      return;
-    }
+  if (!email || !password) {
+    Swal.fire("Missing Fields", "Please enter email and password", "warning");
+    return;
+  }
 
-    // Save role in localStorage
-    localStorage.setItem("userRole", role);
+  try {
+    const res = await fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, role }),
+    });
 
-    // Redirect based on role
-    if (role === "buyer") {
-      navigate("/products");
+    const data = await res.json();
+
+    if (!res.ok) {
+      Swal.fire("Login Failed", data.message, "error");
     } else {
-      navigate("/list");
+      localStorage.setItem("userRole", role);
+      Swal.fire("Success", data.message, "success");
+      role === "buyer" ? navigate("/products") : navigate("/list");
     }
-  };
+  } catch (error) {
+    Swal.fire("Error", "Server error", "error");
+  }
+};
 
   return (
     <div
