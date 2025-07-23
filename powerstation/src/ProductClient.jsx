@@ -8,28 +8,11 @@ import useFetch from "./Usefetch";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "./store/cartslice";
 
-const ProductList = () => {
+const ProductClient = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cart || []);
   const { products, error, isLoading, setProducts } = useFetch("http://localhost:4000/products");
-
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "This product will be deleted!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const updated = products.filter((p) => p.id !== id);
-        setProducts(updated);
-        Swal.fire("Deleted!", "Product has been deleted.", "success");
-      }
-    });
-  };
-
   const addItemToCart = (product) => {
     const alreadyAdded = cartState.some((p) => p.id === product.id);
     if (alreadyAdded) {
@@ -45,17 +28,6 @@ const ProductList = () => {
     minHeight: "100vh",
     padding: "20px",
     background: "linear-gradient(90deg, #ffe259, #ffa751)",
-  };
-
-  const createBarStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "20px",
-    marginBottom: "30px",
-    fontSize: "1.2rem",
-    fontWeight: "500",
-    color: "#333",
   };
 
   const cardStyle = {
@@ -86,12 +58,7 @@ const ProductList = () => {
 
   return (
     <div style={pageStyle}>
-      <div style={createBarStyle}>
-        <span>Create a New Product</span>
-        <Button variant="light" onClick={() => navigate("/newProduct")}>
-          + Add Product
-        </Button>
-      </div>
+      
 
       {error && <p className="text-danger text-center">{error}</p>}
 
@@ -112,12 +79,8 @@ const ProductList = () => {
                     <Button variant="warning" onClick={() => addItemToCart(product)}>
                       <MdAddShoppingCart />
                     </Button>
-                    <Button variant="secondary" onClick={() => navigate(`/update/${product.id}`)}>
-                      <FaEdit />
-                    </Button>
-                    <Button variant="danger" onClick={() => handleDelete(product.id)}>
-                      <MdOutlineFolderDelete />
-                    </Button>
+                     
+                    
                   </Card.Footer>
                 </Card>
               </Col>
@@ -129,4 +92,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default ProductClient;

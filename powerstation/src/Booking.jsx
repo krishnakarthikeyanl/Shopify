@@ -55,7 +55,7 @@ const Booking = () => {
       <button onClick={handleAddItem}>Add</button>
       <ul>
       {items.map((item) => (
-  <div key={item.id} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+    <div key={item.id} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
     <span>{item.label}</span>
     <FaEdit
       role="button"

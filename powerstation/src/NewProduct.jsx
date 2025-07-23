@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Paper, TextField, Typography, Grid } from "@mui/material";
 
 const NewProduct = () => {
-  // 🌈 Page background style
+ 
   const pageStyle = {
     minHeight: "100vh",
     background: "linear-gradient(135deg, #fceabb, #f8b500)",
@@ -11,7 +11,7 @@ const NewProduct = () => {
     alignItems: "center",
   };
 
-  // 🧾 Card style
+
   const paperStyle = {
     width: 420,
     padding: "30px 25px",
@@ -22,7 +22,6 @@ const NewProduct = () => {
     backgroundColor: "#fffef9",
   };
 
-  // 📦 Product state
   const [newProduct, setNewProduct] = useState({
     title: "",
     price: 500,
@@ -35,8 +34,6 @@ const NewProduct = () => {
       count: 0,
     },
   });
-
-  // 🖊️ Input change handler
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name.includes("rating.")) {
@@ -55,11 +52,8 @@ const NewProduct = () => {
       }));
     }
   };
-
-  // ➕ Submit handler
   const handleAdd = (e) => {
     e.preventDefault();
-
     fetch("http://localhost:4000/products", {
       method: "POST",
       headers: {
@@ -79,7 +73,7 @@ const NewProduct = () => {
           rating: { rate: 0, count: 0 },
         });
       })
-      .catch((err) => alert("❌ Failed to Add Product"));
+      .catch((error) => alert("❌ Failed to Add Product"));
   };
 
   return (
@@ -92,7 +86,6 @@ const NewProduct = () => {
         >
           Create New Product
         </Typography>
-
         <TextField
           name="title"
           label="Title"
